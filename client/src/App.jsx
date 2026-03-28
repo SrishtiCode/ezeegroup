@@ -28,7 +28,7 @@ export default function App() {
 
       {/* Scroll to top on route change */}
       <ScrollToTop />
-
+      
       {/* Toast notifications */}
       <Toaster
         position="top-right"
@@ -43,12 +43,12 @@ export default function App() {
           error:   { iconTheme: { primary: '#ff4d4f', secondary: '#fff' } },
         }}
       />
-
+       
       <Navbar />
 
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
-          <Route path="/Home"           element={<Home />} />
+          <Route path="/"           element={<Home />} />
           <Route path="/about"      element={<About />} />
           <Route path="/companies"  element={<Companies />} />
           <Route path="/innovation" element={<Innovation />} />

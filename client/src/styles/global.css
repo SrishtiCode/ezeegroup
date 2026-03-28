@@ -270,3 +270,14 @@ h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.1; }
 .bg-light  { background: var(--grad-bg); }
 .bg-sky    { background: var(--sky-bg); }
 .bg-green  { background: var(--green-bg); }
+
+
+
+@keyframes tickMove {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

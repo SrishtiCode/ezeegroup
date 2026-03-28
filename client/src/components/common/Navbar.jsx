@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import logo from '../../assets/logo-groups.png'
 
 const navLinks = [
-  { path: '/Home',      label: 'Home' },
+  { path: '/',      label: 'Home' },
   { path: '/about',      label: 'About' },
   { path: '/companies',  label: 'Our Companies' },
   { path: '/innovation', label: 'Innovation' },

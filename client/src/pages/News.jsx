@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import PageWrapper from '../components/common/PageWrapper'
 import Reveal from '../components/common/Reveal'
+import labImg from '../assets/WhatsApp Image 2026-03-20 at 7.44.10 AM.jpeg'
 
 const allNews = [
   { id: 1, cat: 'Ezee Store',   date: 'Mar 2025', title: 'New Range of Consumer Electronics Launching Q1 2025',              desc: 'Ezee Store announces a groundbreaking range of consumer electronics designed specifically for the Gen-Z market, featuring AI-powered personalisation and sustainable manufacturing.', img: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&q=70' },
-  { id: 2, cat: 'Ezee Labs',    date: 'Feb 2025', title: 'Exclusive Gen-Z Spiritual Jewellery Collection Drops This Season', desc: 'Ezee Labs launches its most ambitious collection yet — a fusion of ancient spiritual symbols and contemporary Gen-Z aesthetics, available exclusively through the dropshipping platform.', img: 'https://images.unsplash.com/photo-1573408301185-9519f94816b5?w=600&q=70' },
+  { id: 2, cat: 'Ezee Labs',    date: 'Feb 2025', title: 'Exclusive Gen-Z Spiritual Jewellery Collection Drops This Season', desc: 'Ezee Labs launches its most ambitious collection yet — a fusion of ancient spiritual symbols and contemporary Gen-Z aesthetics, available exclusively through the dropshipping platform.', img: labImg},
   { id: 3, cat: 'Company News', date: 'Feb 2025', title: 'Ezee Groups Announces Expansion into New Product Categories',      desc: 'Building on strong growth across both subsidiaries, Ezee Groups reveals plans to expand into new product categories for 2025, targeting additional Gen-Z consumer segments.', img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=70' },
   { id: 4, cat: 'Ezee Store',   date: 'Jan 2025', title: 'Strategic Partnership with Leading Manufacturers Announced',       desc: 'Ezee Store signs a landmark partnership with global electronics manufacturers to accelerate its product innovation pipeline and reduce time-to-market for new devices.', img: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&q=70' },
   { id: 5, cat: 'Ezee Labs',    date: 'Dec 2024', title: 'Dropshipping Platform Hits Major Growth Milestone',                desc: 'Ezee Labs celebrates a significant milestone in platform growth, with a record number of new sellers joining the spiritual jewellery dropshipping ecosystem in Q4 2024.', img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=70' },

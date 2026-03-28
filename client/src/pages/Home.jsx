@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
@@ -5,7 +6,7 @@ import CountUp from 'react-countup'
 import { useInView } from 'react-intersection-observer'
 import PageWrapper from '../components/common/PageWrapper'
 import Reveal from '../components/common/Reveal'
-import myImg from '../assets/WhatsApp Image 2026-03-20 at 7.44.10 AM (1).jpeg'
+import myImg from '../assets/hero.jpeg'
 
 const stats = [
   { num: 2,    suffix: '+', label: 'Subsidiary Companies', color: '#1A8A4A' },
@@ -33,8 +34,10 @@ export default function Home() {
       const p = document.createElement('div')
       const sz = Math.random() * 4 + 1.5
       Object.assign(p.style, {
-        position: 'absolute', borderRadius: '50%',
-        width: sz + 'px', height: sz + 'px',
+        position: 'absolute',
+        borderRadius: '50%',
+        width: sz + 'px',
+        height: sz + 'px',
         left: Math.random() * 100 + '%',
         background: colors[Math.floor(Math.random() * colors.length)],
         animation: `pFloat ${Math.random() * 12 + 8}s linear ${Math.random() * 10}s infinite`,
@@ -49,10 +52,21 @@ export default function Home() {
 
       {/* ══ HERO ══ */}
       <section style={s.hero}>
+
+        {/* ✅ ADD ONLY THIS */}
+        <div style={s.edgeBlur}></div>
+<motion.div
+  style={s.bgImage}
+  animate={{ y: [0, -20, 0] }}
+  transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+/>
+        <div style={s.overlay}></div>
+
         <div style={s.heroDots} />
         <motion.div style={s.orb1} animate={{ x:[0,30,0],y:[0,-20,0] }} transition={{ duration:14,repeat:Infinity,ease:'easeInOut' }}/>
         <motion.div style={s.orb2} animate={{ x:[0,-20,0],y:[0,25,0] }} transition={{ duration:18,repeat:Infinity,ease:'easeInOut',delay:3 }}/>
         <motion.div style={s.orb3} animate={{ x:[0,15,0],y:[0,-15,0] }} transition={{ duration:12,repeat:Infinity,ease:'easeInOut',delay:6 }}/>
+
         <div ref={particlesRef} style={s.particles} />
         <motion.div style={s.ring1} animate={{ rotate:360 }} transition={{ duration:40,repeat:Infinity,ease:'linear' }}/>
         <motion.div style={s.ring2} animate={{ rotate:-360 }} transition={{ duration:28,repeat:Infinity,ease:'linear' }}/>
@@ -65,81 +79,44 @@ export default function Home() {
             Next-Generation Innovation Company
           </motion.div>
 
-        <div style={s.heroContainer}>
-  
-  {/* LEFT SIDE TEXT */}
-  <div style={s.left}>
-    <motion.h1 style={s.h1}
-      initial={{ opacity:0,y:30 }} animate={{ opacity:1,y:0 }}
-      transition={{ duration:0.9,delay:0.25,ease:[0.22,1,0.36,1] }}>
-      
-      Building the Future of{' '}
-      <span style={{ color:'#00BFFF' }}>Technology</span>
+          <div style={s.heroContainer}>
+            
+             <motion.h1 
+  style={{ ...s.h1, maxWidth:'500px', lineHeight:1.2 ,paddingLeft:'40px', }}   // 👈 ADD
+  initial={{ opacity:0,y:30 }} 
+  animate={{ opacity:1,y:0 }}
+>
 
-      <span style={{ display:'block', paddingLeft:52 }}>
-        &amp; Lifestyle{' '}
-        <span style={{ color:'#1A8A4A', fontStyle:'italic' }}>Innovation</span>
-      </span>
-    </motion.h1>
+  <div>Building the</div>
+  <div>Future of</div>
+
+  <div style={{ color:'#00BFFF' }}>Technology</div>
+
+  <div>
+    & Lifestyle{' '}
+    <span style={{ color:'#c95410', fontStyle:'italic' }}>
+      Innovation
+    </span>
   </div>
 
+</motion.h1>
+            
 
-</div>
-
-          
+            
+          </div>
 
           <motion.p style={s.heroSub}
-            initial={{ opacity:0,y:20 }} animate={{ opacity:1,y:0 }}
-            transition={{ duration:0.8,delay:0.45 }}>
+            initial={{ opacity:0,y:20 }} animate={{ opacity:1,y:0 }}>
             EZee Groups is a modern multi-industry company driving innovation across
-            electronics manufacturing and Gen-Z lifestyle brands — built for tomorrow,
-            delivered today.
+            electronics manufacturing and Gen-Z lifestyle brands.
           </motion.p>
 
-          <motion.div style={s.heroBtns}
-            initial={{ opacity:0,y:20 }} animate={{ opacity:1,y:0 }}
-            transition={{ duration:0.8,delay:0.6 }}>
-            <Link to="/companies" className="btn-sky">
-              Explore Our Companies
-              <svg width="17" height="17" viewBox="0 0 17 17" fill="none">
-                <path d="M3.5 8.5h10M9 4l4.5 4.5L9 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </Link>
+          <motion.div style={s.heroBtns}>
+            <Link to="/companies" className="btn-sky">Explore Our Companies</Link>
             <Link to="/about" className="btn-green-outline">Learn About EZee Groups</Link>
           </motion.div>
         </div>
 
-        <motion.div style={s.scrollHint}
-          initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:1.2 }}>
-          <div style={s.scrollMouse}>
-            <motion.div style={s.scrollDot}
-              animate={{ y:[0,10,0], opacity:[1,0,1] }}
-              transition={{ duration:1.8, repeat:Infinity }}/>
-          </div>
-          <span style={s.scrollLabel}>Scroll</span>
-        </motion.div>
-      </section>
-
-      {/* ══ TICKER ══ */}
-      <div style={s.tickerWrap}>
-        <div style={s.tickerTrack}>
-          {[...tickerItems,...tickerItems,...tickerItems].map((t,i)=>(
-            <span key={i} style={s.tickerItem}>{t}<span style={s.tickerDot}>◆</span></span>
-          ))}
-        </div>
-      </div>
-
-      {/* ══ STATS ══ */}
-      <section style={s.statsSection}>
-        <Reveal><div className="sec-label" style={{ textAlign:'center' }}>Our Impact</div></Reveal>
-        <Reveal delay={0.1}>
-          <h2 className="sec-title" style={{ textAlign:'center', marginBottom:48 }}>
-            Numbers That <em>Define Us</em>
-          </h2>
-        </Reveal>
-        <div style={s.statsGrid}>
-          {stats.map((st,i) => <Reveal key={i} delay={i*0.1}><StatCard {...st}/></Reveal>)}
-        </div>
       </section>
 
       {/* ══ ABOUT STRIP ══ */}
@@ -289,7 +266,7 @@ function CompanyCard({ name, tag, tagColor, desc, img, accent }) {
 
 /* ── STYLES ── */
 const s = {
-  hero:{ marginTop:'40px', minHeight:'100vh', display:'flex', alignItems:'center', background:'#fff', position:'relative', overflow:'hidden',},
+  // hero:{ marginTop:'40px', minHeight:'100vh', display:'flex', alignItems:'center', background:'#fff', position:'relative', overflow:'hidden',},
   heroDots:{ position:'absolute', inset:0, backgroundImage:'radial-gradient(circle, rgba(0,191,255,0.12) 1px, transparent 1px)', backgroundSize:'40px 40px', opacity:0.6, pointerEvents:'none', animation:'dotsDrift 30s linear infinite' },
   particles:{ position:'absolute', inset:0, overflow:'hidden', pointerEvents:'none' },
   orb1:{ position:'absolute', width:700, height:700, borderRadius:'50%', background:'radial-gradient(circle,rgba(0,191,255,0.1),transparent 70%)', top:-200, right:-150, pointerEvents:'none' },
@@ -301,8 +278,8 @@ const s = {
   eyebrow:{ display:'inline-flex', alignItems:'center', gap:10, padding:'8px 20px', border:'1.5px solid rgba(0,191,255,0.28)', borderRadius:100, fontSize:11.5, fontWeight:600, letterSpacing:2.5, textTransform:'uppercase', color:'#00BFFF', background:'rgba(0,191,255,0.06)', marginBottom:32 },
   eyebrowDot:{ width:6, height:6, borderRadius:'50%', background:'#00BFFF', flexShrink:0, animation:'blink 2s ease-in-out infinite' },
   h1:{ fontFamily:'"Cormorant Garamond",serif', fontSize:'clamp(44px,6vw,86px)', fontWeight:800, color:'#0d2218', lineHeight:1.05, letterSpacing:-2 },
-  heroSub:{ marginTop:24, fontSize:17, fontWeight:300, color:'#2d5a3a', lineHeight:1.82, maxWidth:540 },
-  heroBtns:{ display:'flex', gap:14, marginTop:40, flexWrap:'wrap' },
+  heroSub:{ marginTop:24, fontSize:17, fontWeight:300, color:'#d4dfd7', lineHeight:1.82, maxWidth:540 },
+  heroBtns:{ display:'flex', gap:14, marginTop:50, marginBottom:1.5,flexWrap:'wrap' },
   scrollHint:{ position:'absolute', bottom:40, left:'50%', transform:'translateX(-50%)', display:'flex', flexDirection:'column', alignItems:'center', gap:10 },
   scrollMouse:{ width:22, height:36, border:'2px solid rgba(0,191,255,0.3)', borderRadius:12, position:'relative', display:'flex', justifyContent:'center', overflow:'hidden' },
   scrollDot:{ width:3, height:8, background:'#00BFFF', borderRadius:2, marginTop:6 },
@@ -345,5 +322,105 @@ const s = {
   valName:{ fontSize:13, fontWeight:600 },
   ctaBanner:{ padding:'100px 80px', background:'linear-gradient(135deg,rgba(0,191,255,0.07),rgba(26,138,74,0.06))', textAlign:'center', borderTop:'1.5px solid rgba(0,191,255,0.12)', borderBottom:'1.5px solid rgba(26,138,74,0.1)' },
   ctaTitle:{ fontFamily:'"Cormorant Garamond",serif', fontSize:'clamp(28px,4vw,52px)', fontWeight:700, color:'#0d2218', lineHeight:1.15 },
+  heroContainer:{
+  display:'flex',
+  alignItems:'center',
+  justifyContent:'space-between',
+  gap:'40px'
+},
 
+left:{
+  flex:1
+},
+
+right:{
+  flex:1,
+  display:'flex',
+  justifyContent:'flex-end'
+},
+
+image:{
+  marginLeft:'300px',
+  width:'200px',
+  borderRadius:'20px',
+  boxShadow:'0 25px 70px rgba(0,0,0,0.2)',
+  objectFit:'cover'
+},
+hero:{
+  marginTop:'40px',
+  minHeight:'100vh',
+  display:'flex',
+  alignItems:'center',
+  position:'relative',
+  overflow:'hidden',
+
+  // backgroundImage: `url(${myImg})`,   // 👈 ADD
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat'
+},
+  hero:{
+    marginTop:'40px',
+    minHeight:'100vh',
+    display:'flex',
+    alignItems:'center',
+    position:'relative',
+    overflow:'hidden'
+  },
+
+bgImage:{
+  position:'absolute',
+  inset:0,
+  backgroundImage:`url(${myImg})`,
+  backgroundSize:'cover',
+  backgroundPosition:'left center',
+  zIndex:0
+},
+
+overlay:{
+  position:'absolute',
+  inset:0,
+  background:'rgba(0,0,0,0.35)',   // adjust 0.2–0.5 as needed
+  zIndex:1
+},
+
+  heroContent:{ position:'relative', zIndex:2 },
+h1:{
+  fontSize:'clamp(44px,6vw,80px)',
+  fontWeight:800,
+  color:'#fff',
+  maxWidth:'500px',   // 👈 important
+  lineHeight:1.2
+},
+edgeBlur:{
+  position:'absolute',
+  inset:0,
+  pointerEvents:'none',
+  zIndex:1,
+  backdropFilter:'blur(20px)',
+  WebkitBackdropFilter:'blur(20px)',
+  
+  maskImage:'linear-gradient(to right, black 0%, transparent 20%, transparent 80%, black 100%)',
+  WebkitMaskImage:'linear-gradient(to right, black 0%, transparent 20%, transparent 80%, black 100%)'
+},
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
