@@ -46,10 +46,13 @@ export default function Contact() {
             <div style={s.infoWrap}>
               <h2 className="sec-title" style={{ marginBottom: 8 }}>Get In <em>Touch</em></h2>
               <div className="sec-div" />
-
               {[
                 { label: 'General Inquiries',  val: 'info.ezeegroups@gmail.com',  href: 'mailto:info.ezeegroups@gmail.com' },
                 { label: 'Business Inquiries', val: 'info.ezeelabs@gmail.com',    href: 'mailto:info.ezeelabs@gmail.com' },
+
+                // ✅ ADD YOUR NUMBER HERE
+                { label: 'Call Us', val: '+91 8677050046', href: 'tel:+918677050046' },
+
               ].map(item => (
                 <div key={item.label} style={s.infoBlock}>
                   <span style={s.infoLabel}>{item.label}</span>
