@@ -95,11 +95,25 @@ router.post('/', async (req, res) => {
 });
 
 
-// GET /api/contact (admin)
+// GET /api/contact (admin - protected)
 router.get('/', async (req, res) => {
   try {
+    const authHeader = req.headers.authorization;
+
+    if (authHeader !== "Bearer admin123") {
+      return res.status(403).json({
+        success: false,
+        message: "Unauthorized access"
+      });
+    }
+
     const contacts = await Contact.find().sort({ createdAt: -1 });
-    res.json({ success: true, data: contacts });
+
+    res.json({
+      success: true,
+      data: contacts
+    });
+
   } catch (err) {
     res.status(500).json({
       success: false,
@@ -107,5 +121,3 @@ router.get('/', async (req, res) => {
     });
   }
 });
-
-module.exports = router;
