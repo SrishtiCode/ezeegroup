@@ -76,8 +76,8 @@ router.post('/', async (req, res) => {
     };
 
     // ✅ Send both mails
-    await transporter.sendMail(clientMail);
-    await transporter.sendMail(userMail);
+    transporter.sendMail(clientMail);
+    transporter.sendMail(userMail);
 
     res.status(201).json({
       success: true,

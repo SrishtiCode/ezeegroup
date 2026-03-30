@@ -16,15 +16,22 @@ export default function Contact() {
     }
     setLoading(true)
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/contact`, form)
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/contact`, form)
+
+      console.log("Response:", res.data)   
+
       toast.success('Message sent! We will get back to you within 24 hours.')
+
       setForm({ name: '', email: '', subject: '', message: '' })
-    } catch {
-      toast.error('Something went wrong. Please try again.')
+
+    } catch (err) {
+      console.error("Error:", err.response || err.message)  
+
+      toast.error(err?.response?.data?.message || 'Something went wrong. Please try again.')
+
     } finally {
       setLoading(false)
     }
-  }
 
   return (
     <PageWrapper>
