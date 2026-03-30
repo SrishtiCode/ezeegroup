@@ -5,8 +5,16 @@ require('dotenv').config();
 
 const app = express();
 
+// ✅ CORS CONFIG (production + local)
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    process.env.CLIENT_URL
+  ],
+  credentials: true
+}));
+
 // Middleware
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -16,21 +24,27 @@ app.use('/api/careers', require('./routes/careers'));
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'Ezee Groups API Running ✅', timestamp: new Date() });
+  res.json({
+    status: 'Ezee Groups API Running ✅',
+    timestamp: new Date()
+  });
 });
 
 // MongoDB connection
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/ezeegroups');
+    await mongoose.connect(process.env.MONGO_URI);
     console.log('✅ MongoDB Connected');
   } catch (err) {
     console.error('❌ MongoDB Error:', err.message);
-    // Continue without DB for demo
+    process.exit(1); // stop server if DB fails
   }
 };
 
 connectDB();
 
+// Server start
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
