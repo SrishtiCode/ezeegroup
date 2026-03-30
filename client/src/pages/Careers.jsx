@@ -33,7 +33,7 @@ export default function Careers() {
     }
     setLoading(true)
     try {
-      await axios.post('/api/careers', form)
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/careers`, form)
       toast.success('Application submitted! We will reach out soon.')
       setForm({ name: '', email: '', phone: '', position: '', message: '' })
     } catch {
