@@ -16,7 +16,7 @@ export default function Contact() {
     }
     setLoading(true)
     try {
-      await axios.post('https://ezeegroup.onrender.com/api/contact', form)
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/contact`, form)
       toast.success('Message sent! We will get back to you within 24 hours.')
       setForm({ name: '', email: '', subject: '', message: '' })
     } catch {
