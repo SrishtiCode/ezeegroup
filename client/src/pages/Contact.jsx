@@ -174,3 +174,4 @@ const s = {
   mapTitle: { fontFamily: '"Cormorant Garamond",serif', fontSize: 24, fontWeight: 700, color: '#0d2233' },
   mapText: { fontSize: 14, color: '#3a5a6a', marginTop: 6 },
 }
+}
