@@ -3,7 +3,7 @@
 ##  Live Demo
 
 - 🌐 Frontend: https://ezeegroup-beryl.vercel.app  
-- ⚙️ Backend API: [https://ezeegroup.onrender.com  ](https://ezeegroup.onrender.com/api/health)
+- ⚙️ Backend API: https://ezeegroup.onrender.com/api/health
 
 ---
 
