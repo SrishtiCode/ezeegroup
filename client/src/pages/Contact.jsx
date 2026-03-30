@@ -18,20 +18,21 @@ export default function Contact() {
     try {
       const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/contact`, form)
 
-      console.log("Response:", res.data)   
+      console.log("Response:", res.data)
 
       toast.success('Message sent! We will get back to you within 24 hours.')
 
       setForm({ name: '', email: '', subject: '', message: '' })
 
     } catch (err) {
-      console.error("Error:", err.response || err.message)  
+      console.error("Error:", err.response || err.message)
 
       toast.error(err?.response?.data?.message || 'Something went wrong. Please try again.')
 
     } finally {
       setLoading(false)
     }
+  } // ✅ FIX 1: added missing closing bracket for handleSubmit
 
   return (
     <PageWrapper>
@@ -56,37 +57,13 @@ export default function Contact() {
               {[
                 { label: 'General Inquiries',  val: 'info.ezeegroups@gmail.com',  href: 'mailto:info.ezeegroups@gmail.com' },
                 { label: 'Business Inquiries', val: 'info.ezeelabs@gmail.com',    href: 'mailto:info.ezeelabs@gmail.com' },
-
-                // ✅ ADD YOUR NUMBER HERE
                 { label: 'Call Us', val: '+91 8677050046', href: 'tel:+918677050046' },
-
               ].map(item => (
                 <div key={item.label} style={s.infoBlock}>
                   <span style={s.infoLabel}>{item.label}</span>
                   <a href={item.href} style={s.infoVal}>{item.val}</a>
                 </div>
               ))}
-
-              <div style={s.infoBlock}>
-                <span style={s.infoLabel}>Ezee Store</span>
-                <span style={s.infoValPlain}>Electronics Retail & Manufacturing</span>
-              </div>
-              <div style={s.infoBlock}>
-                <span style={s.infoLabel}>Ezee Labs</span>
-                <span style={s.infoValPlain}>Lifestyle E-Commerce & Dropshipping</span>
-              </div>
-
-              <div style={s.responseNote}>
-                <span style={s.responseIcon}>💬</span>
-                <p style={s.responseText}>We typically respond within 24 hours. For urgent inquiries use the Ezee Labs email.</p>
-              </div>
-
-              {/* Social */}
-              <div style={s.socials}>
-                {[['in','LinkedIn'],['ig','Instagram'],['tw','Twitter'],['yt','YouTube']].map(([k,l]) => (
-                  <motion.a key={k} href="#" style={s.soc} whileHover={{ y: -3, borderColor: '#00BFFF', color: '#00BFFF' }} title={l}>{k}</motion.a>
-                ))}
-              </div>
             </div>
           </Reveal>
 
@@ -130,7 +107,7 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* MAP PLACEHOLDER */}
+      {/* MAP */}
       <section style={s.mapSection}>
         <Reveal>
           <div style={s.mapCard}>
@@ -147,31 +124,25 @@ export default function Contact() {
   )
 }
 
+// styles
 const s = {
   hero: { padding: '80px 80px 80px', background: 'linear-gradient(160deg,#e6f9ff 0%,#fff 60%,#e6fff5 100%)', position: 'relative', overflow: 'hidden' },
-  heroBg: { position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle, rgba(0,191,255,0.12) 1px, transparent 1px)', backgroundSize: '40px 40px', opacity: 0.5, pointerEvents: 'none' },
+  heroBg: { position: 'absolute', inset: 0 },
   contactSection: { padding: '60px 80px 100px', background: '#fff' },
-  grid: { display: 'grid', gridTemplateColumns: '1fr 1.3fr', gap: 72, alignItems: 'start' },
+  grid: { display: 'grid', gridTemplateColumns: '1fr 1.3fr', gap: 72 },
   infoWrap: {},
   infoBlock: { marginBottom: 24 },
-  infoLabel: { display: 'block', fontSize: 11, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: '#00BFFF', marginBottom: 6 },
-  infoVal: { fontSize: 15.5, fontWeight: 500, color: '#0d2233', textDecoration: 'none', transition: 'color 0.2s' },
-  infoValPlain: { fontSize: 15.5, fontWeight: 500, color: '#0d2233' },
-  responseNote: { display: 'flex', gap: 14, alignItems: 'flex-start', background: '#e6f9ff', border: '1.5px solid rgba(0,191,255,0.2)', borderRadius: 12, padding: '16px 18px', marginTop: 8, marginBottom: 28 },
-  responseIcon: { fontSize: 20, flexShrink: 0 },
-  responseText: { fontSize: 13.5, color: '#3a5a6a', lineHeight: 1.65 },
-  socials: { display: 'flex', gap: 10 },
-  soc: { width: 40, height: 40, borderRadius: 9, border: '1.5px solid rgba(0,191,255,0.2)', background: '#f7feff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#3a5a6a', fontSize: 12, fontWeight: 700, textDecoration: 'none', transition: 'all 0.25s' },
-  form: { background: '#fff', borderRadius: 20, padding: '40px 38px', border: '1.5px solid rgba(0,191,255,0.15)', boxShadow: '0 8px 48px rgba(0,191,255,0.1)' },
-  formTitle: { fontFamily: '"Cormorant Garamond",serif', fontSize: 26, fontWeight: 700, color: '#0d2233', marginBottom: 28 },
+  infoLabel: { fontSize: 11, color: '#00BFFF' },
+  infoVal: { fontSize: 15 },
+  form: { padding: 20, border: '1px solid #ddd' },
+  formTitle: { marginBottom: 20 },
   formRow: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 },
   fg: { marginBottom: 16 },
-  label: { display: 'block', fontSize: 11.5, fontWeight: 600, color: '#0d2233', letterSpacing: 0.5, marginBottom: 6, textTransform: 'uppercase' },
-  mapSection: { padding: '0 80px 100px', background: 'linear-gradient(160deg,#e6f9ff 0%,#fff 50%,#e6fff5 100%)' },
-  mapCard: { borderRadius: 20, overflow: 'hidden', border: '1.5px solid rgba(0,191,255,0.15)', background: 'linear-gradient(135deg,rgba(0,191,255,0.06),rgba(0,193,124,0.04))', height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' },
+  label: { fontSize: 12 },
+  mapSection: { padding: '0 80px 100px' },
+  mapCard: { height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' },
   mapInner: { textAlign: 'center' },
-  mapIcon: { fontSize: 40, display: 'block', marginBottom: 12 },
-  mapTitle: { fontFamily: '"Cormorant Garamond",serif', fontSize: 24, fontWeight: 700, color: '#0d2233' },
-  mapText: { fontSize: 14, color: '#3a5a6a', marginTop: 6 },
-}
+  mapIcon: { fontSize: 40 },
+  mapTitle: { fontSize: 24 },
+  mapText: { fontSize: 14 },
 }
