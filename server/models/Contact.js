@@ -12,24 +12,23 @@ const contactSchema = new mongoose.Schema({
     required: true,
     lowercase: true,
     trim: true,
-    match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please use a valid email"] // ✅ email validation
+    match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please use a valid email"]
   },
 
   subject: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
 
   message: {
     type: String,
-    required: true
-  },
-
-  createdAt: {
-    type: Date,
-    default: Date.now
+    required: true,
+    trim: true
   }
 
+}, {
+  timestamps: true
 });
 
 module.exports = mongoose.model('Contact', contactSchema);

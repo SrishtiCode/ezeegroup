@@ -12,7 +12,7 @@ const careerSchema = new mongoose.Schema({
     required: true, 
     lowercase: true, 
     trim: true,
-    match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please use a valid email"] // ✅ email validation
+    match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please use a valid email"]
   },
 
   phone: { 
@@ -22,17 +22,17 @@ const careerSchema = new mongoose.Schema({
 
   position: { 
     type: String, 
-    required: true 
+    required: true,
+    trim: true
   },
 
   message: { 
-    type: String 
-  },
-
-  createdAt: { 
-    type: Date, 
-    default: Date.now 
+    type: String,
+    trim: true
   }
+
+}, { 
+  timestamps: true   // ✅ replaces createdAt manually
 });
 
 module.exports = mongoose.model('Career', careerSchema);

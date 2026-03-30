@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
 
-    // ✅ Required fields check
+    // ✅ Validation
     if (!name || !email || !subject || !message) {
       return res.status(400).json({
         success: false,
@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
       });
     }
 
-    // ✅ Email validation
+    // ✅ Email format check
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({
@@ -33,7 +33,15 @@ router.post('/', async (req, res) => {
       message
     });
 
-    // ✅ Nodemailer setup
+    // ✅ SEND RESPONSE FIRST (⚡ fast UI)
+    res.status(201).json({
+      success: true,
+      message: 'Message sent successfully!',
+      data: contact
+    });
+
+    // 🔥 Background email sending (no delay for user)
+
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -42,55 +50,53 @@ router.post('/', async (req, res) => {
       }
     });
 
-    // ✅ Client mail
+    // 📧 Mail to company
     const clientMail = {
       from: process.env.EMAIL_USER,
       to: process.env.CLIENT_EMAIL,
       subject: `New Contact Message: ${subject}`,
       text: `
-        New message received:
+New message received:
 
-        Name: ${name}
-        Email: ${email}
-        Subject: ${subject}
-        Message: ${message}
+Name: ${name}
+Email: ${email}
+Subject: ${subject}
+Message: ${message}
       `
     };
 
-    // ✅ User confirmation mail
+    // 📧 Confirmation mail to user
     const userMail = {
       from: process.env.EMAIL_USER,
       to: email,
       subject: "We received your message",
       text: `
-        Hello ${name},
+Hello ${name},
 
-        Thank you for contacting us.
+Thank you for contacting us.
 
-        We have received your message regarding "${subject}".
-        Our team will respond to you shortly.
+We have received your message regarding "${subject}".
+Our team will respond to you shortly.
 
-        Regards,
-        Company Team
+Regards,
+Ezee Groups
       `
     };
 
-    // ✅ Send both mails
-    transporter.sendMail(clientMail);
-    transporter.sendMail(userMail);
-
-    res.status(201).json({
-      success: true,
-      message: 'Message sent successfully!',
-      data: contact
-    });
+    // Send emails after response
+    await transporter.sendMail(clientMail);
+    await transporter.sendMail(userMail);
 
   } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      success: false,
-      message: 'Server error. Please try again.'
-    });
+    console.error(err);
+
+    // Avoid double response error
+    if (!res.headersSent) {
+      res.status(500).json({
+        success: false,
+        message: 'Server error. Please try again.'
+      });
+    }
   }
 });
 
@@ -121,3 +127,5 @@ router.get('/', async (req, res) => {
     });
   }
 });
+
+module.exports = router;

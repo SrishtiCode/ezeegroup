@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
   try {
     const { name, email, phone, position, message } = req.body;
 
-    // ✅ Required fields check
+    // ✅ Validation
     if (!name || !email || !position) {
       return res.status(400).json({
         success: false,
@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
       });
     }
 
-    // ✅ Email validation (extra safety)
+    // ✅ Email format check
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({
@@ -34,7 +34,15 @@ router.post('/', async (req, res) => {
       message
     });
 
-    // ✅ Nodemailer setup
+    // ✅ SEND RESPONSE FIRST (⚡ fast UI)
+    res.status(201).json({
+      success: true,
+      message: 'Application submitted successfully!',
+      data: application
+    });
+
+    // 🔥 BACKGROUND WORK STARTS HERE (no delay to user)
+
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -43,56 +51,56 @@ router.post('/', async (req, res) => {
       }
     });
 
-    // ✅ Client mail
+    // 📧 Email to company
     const clientMail = {
       from: process.env.EMAIL_USER,
       to: process.env.CLIENT_EMAIL,
       subject: `New Job Application: ${position}`,
       text: `
-        New career application received:
+New career application received:
 
-        Name: ${name}
-        Email: ${email}
-        Phone: ${phone}
-        Position: ${position}
-        Message: ${message}
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Position: ${position}
+Message: ${message}
       `
     };
 
-    // ✅ User confirmation mail
+    // 📧 Confirmation to user
     const userMail = {
       from: process.env.EMAIL_USER,
       to: email,
       subject: "Application Received",
       text: `
-        Hello ${name},
+Hello ${name},
 
-        Thank you for applying for the position of "${position}".
+Thank you for applying for the position of "${position}".
 
-        Our HR team will review your application and get back to you soon.
+Our HR team will review your application and get back to you soon.
 
-        Regards,
-        Company Team
+Regards,
+Ezee Groups
       `
     };
 
-    // ✅ Send emails
+    // Send emails (async, after response)
     await transporter.sendMail(clientMail);
     await transporter.sendMail(userMail);
 
-    res.status(201).json({
-      success: true,
-      message: 'Application submitted successfully!',
-      data: application
-    });
-
   } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      success: false,
-      message: 'Server error. Please try again.'
-    });
+    console.error(err);
+
+    // Only send error if response not already sent
+    if (!res.headersSent) {
+      res.status(500).json({
+        success: false,
+        message: 'Server error. Please try again.'
+      });
+    }
   }
 });
+
+module.exports = router;
 
 module.exports = router;

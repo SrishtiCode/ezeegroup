@@ -5,24 +5,27 @@ require('dotenv').config();
 
 const app = express();
 
-// ✅ CORS CONFIG (production + local)
+// ✅ CORS CONFIG (safe for production)
 app.use(cors({
   origin: [
     'http://localhost:5173',
     process.env.CLIENT_URL
-  ],
+  ].filter(Boolean), // removes undefined
   credentials: true
 }));
 
-// Middleware
+// ✅ Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
-app.use('/api/contact', require('./routes/contact'));
-app.use('/api/careers', require('./routes/careers'));
+// ✅ Routes
+const contactRoute = require('./routes/contact');
+const careersRoute = require('./routes/careers');
 
-// Health check
+app.use('/api/contact', contactRoute);
+app.use('/api/careers', careersRoute);
+
+// ✅ Health check
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'Ezee Groups API Running ✅',
@@ -30,21 +33,27 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// MongoDB connection
+// ✅ MongoDB connection (IMPROVED)
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(process.env.MONGO_URI, {
+      dbName: 'ezeeDB' // optional but recommended
+    });
     console.log('✅ MongoDB Connected');
   } catch (err) {
     console.error('❌ MongoDB Error:', err.message);
-    process.exit(1); // stop server if DB fails
+    process.exit(1);
   }
 };
 
-connectDB();
+// ✅ Start server ONLY after DB connects
+const startServer = async () => {
+  await connectDB();
 
-// Server start
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+  });
+};
+
+startServer();
