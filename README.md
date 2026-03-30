@@ -30,6 +30,8 @@ npm run install-all
 cd server && cp .env.example .env
 cd .. && npm run dev
 
+```
+
 ##  Pages
 
 | Route | Page |
